@@ -11,7 +11,7 @@
     "@types/aws4": "^1.5.1",
     "@types/aws-lambda": "^0.0.33",
     "@types/mysql": "0.0.34",
-    "serverless": "^1.27.2",
+    "serverless": "^1.30.3",
     "serverless-webpack": "^3.0.0",
     "ts-loader": "^2.3.7",
     "ts-node": "^3.3.0",
@@ -22,9 +22,10 @@
   },
   "dependencies": {
     "aws4": "^1.6.0",
-    "memcached": "2.2.2",
     "axios": "0.18.0",
+    "memcached": "2.2.2",
     "mysql": "^2.14.1",
+    "npm": "^6.4.1",
     "typeorm": "0.1.16"
   }
 }
