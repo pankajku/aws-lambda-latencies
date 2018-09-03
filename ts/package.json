@@ -1,0 +1,30 @@
+{
+  "name": "aws-lambda-latencies",
+  "version": "1.0.0",
+  "description": "Programs to explore AWS Lambda Latencies",
+  "main": "index.js",
+  "keywords": [],
+  "author": "Pankaj Kumar",
+  "license": "Proprietary",
+  "devDependencies": {
+    "@types/node": "^8.0.28",
+    "@types/aws4": "^1.5.1",
+    "@types/aws-lambda": "^0.0.33",
+    "@types/mysql": "0.0.34",
+    "serverless": "^1.27.2",
+    "serverless-webpack": "^3.0.0",
+    "ts-loader": "^2.3.7",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.5.2",
+    "webpack": "^3.5.6",
+    "command-line-args": "5.0.2",
+    "tslint": "^5.9.1"
+  },
+  "dependencies": {
+    "aws4": "^1.6.0",
+    "memcached": "2.2.2",
+    "axios": "0.18.0",
+    "mysql": "^2.14.1",
+    "typeorm": "0.1.16"
+  }
+}

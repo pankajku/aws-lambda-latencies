@@ -1,0 +1,7 @@
+.DS_Store
+node_modules/
+.serverless/
+go/bin/
+go/pkg/
+go/src/github.com/
+go/src/golang.org/

@@ -1,0 +1,162 @@
+service:
+  name: aws-lambda-latencies
+
+# Add the serverless-webpack plugin
+plugins:
+  - serverless-webpack
+
+custom:
+  vpc:
+    securityGroupIds:
+      - ${ssm:/dev/securityGroupId1}
+      - ${ssm:/dev/securityGroupId2}
+    subnetIds:
+      - ${ssm:/dev/subnetId1}
+      - ${ssm:/dev/subnetId2}
+  dbparams:
+    host: ${ssm:/${env:HPF_INSTANCE}/relationalDB/host}
+    user: ${ssm:/${env:HPF_INSTANCE}/AAASecurityDB/username}
+    password: ${ssm:/${env:HPF_INSTANCE}/AAASecurityDB/password~true}
+    database: pankajk
+  memcachedEndPoint: hosted-payments-sb.mtf2zb.cfg.usw2.cache.amazonaws.com:11211
+  streamName: maven-dev
+  shardId: shardId-000000000000
+
+provider:
+  name: aws
+#  runtime: nodejs6.10
+  runtime: nodejs8.10
+  stage: ${env:HPF_INSTANCE}
+  region: us-west-2
+  timeout: 60
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - kinesis:*
+      Resource: "*"
+
+functions:
+  echo:
+    handler: src/echo.echo
+    events:
+      - http:
+          method: get
+          path: echo
+
+  proxyEcho:
+    handler: src/proxy_echo.proxyEcho
+    events:
+      - http:
+          method: get
+          path: proxy-echo
+
+  heavyEcho:
+    handler: src/heavy_echo.heavyEcho
+    events:
+      - http:
+          method: get
+          path: heavy-echo
+
+  sleep:
+    handler: src/sleep.sleep
+    events:
+      - http:
+          method: get
+          path: sleep
+
+  rdsGet:
+    handler: src/rds_get.get
+    environment: ${self:custom.dbparams}
+    vpc: ${self:custom.vpc}
+    events:
+      - http:
+          method: get
+          path: rds-get/{key}
+
+  rdsGet2:
+    handler: src/rds_get2.get2
+    environment: ${self:custom.dbparams}
+    vpc: ${self:custom.vpc}
+    events:
+      - http:
+          method: get
+          path: rds-get2/{key}
+       
+  rdsPut:
+    handler: src/rds_put.put
+    environment: ${self:custom.dbparams}
+    vpc: ${self:custom.vpc}
+    events:
+      - http:
+          method: put
+          path: rds-put/{key}
+
+  typeormGet:
+    handler: src/typeorm_get.get
+    environment: ${self:custom.dbparams}
+    vpc: ${self:custom.vpc}
+    events:
+      - http:
+          method: get
+          path: typeorm-get/{key}
+
+  typeormGet2:
+    handler: src/typeorm_get.get2
+    environment: ${self:custom.dbparams}
+    vpc: ${self:custom.vpc}
+    events:
+      - http:
+          method: get
+          path: typeorm-get2/{key}
+
+  typeormPut:
+    handler: src/typeorm_put.put
+    environment: ${self:custom.dbparams}
+    vpc: ${self:custom.vpc}
+    events:
+      - http:
+          method: put
+          path: typeorm-put/{key}
+
+  memcachedGet:
+    handler: src/memcached_get.get
+    environment:
+      memcachedEndPoint: ${self:custom.memcachedEndPoint}
+    vpc: ${self:custom.vpc}
+    events:
+      - http:
+          method: get
+          path: memcached-get/{key}
+
+  memcachedPut:
+    handler: src/memcached_put.put
+    environment:
+      memcachedEndPoint: ${self:custom.memcachedEndPoint}
+    vpc: ${self:custom.vpc}
+    events:
+      - http:
+          method: put
+          path: memcached-put/{key}
+
+  kinesisGet:
+    handler: src/kinesis_get.get
+    environment:
+      streamName: ${self:custom.streamName}
+      shardId: ${self:custom.shardId}
+    events:
+      - http:
+          method: get
+          path: kinesis-get
+
+  kinesisPut:
+    handler: src/kinesis_put.put
+    environment:
+      streamName: ${self:custom.streamName}
+    events:
+      - http:
+          method: put
+          path: kinesis-put/{key}
