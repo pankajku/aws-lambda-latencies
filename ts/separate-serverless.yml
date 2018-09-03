@@ -1,5 +1,5 @@
 service:
-  name: aws-lambda-latencies
+  name: pankajk-awslt-separate
 
 # Add the serverless-webpack plugin
 plugins:
@@ -8,27 +8,25 @@ plugins:
 custom:
   vpc:
     securityGroupIds:
-      - ${ssm:/dev/securityGroupId1}
-      - ${ssm:/dev/securityGroupId2}
+      - ${ssm:/${env:AWSLT_BASE}/securityGroupId1}
+      - ${ssm:/${env:AWSLT_BASE}/securityGroupId2}
     subnetIds:
-      - ${ssm:/dev/subnetId1}
-      - ${ssm:/dev/subnetId2}
+      - ${ssm:/${env:AWSLT_BASE}/subnetId1}
+      - ${ssm:/${env:AWSLT_BASE}/subnetId2}
   dbparams:
-    host: ${ssm:/${env:HPF_INSTANCE}/relationalDB/host}
-    user: ${ssm:/${env:HPF_INSTANCE}/AAASecurityDB/username}
-    password: ${ssm:/${env:HPF_INSTANCE}/AAASecurityDB/password~true}
-    database: pankajk
-  memcachedEndPoint: hosted-payments-sb.mtf2zb.cfg.usw2.cache.amazonaws.com:11211
-  streamName: maven-dev
-  shardId: shardId-000000000000
+    host: ${ssm:/${env:AWSLT_BASE}/hostname}
+    user: ${ssm:/${env:AWSLT_BASE}/username}
+    password: ${ssm:/${env:AWSLT_BASE}/password~true}
+    database: ${ssm:/${env:AWSLT_BASE}/dbschema}
+  memcachedEndPoint: ${ssm:/${env:AWSLT_BASE}/memcached-ep}
+  streamName: ${ssm:/${env:AWSLT_BASE}/kinesis-streamname}
+  shardId: ${ssm:/${env:AWSLT_BASE}/kinesis-shardid}
 
 provider:
   name: aws
-#  runtime: nodejs6.10
   runtime: nodejs8.10
-  stage: ${env:HPF_INSTANCE}
+  stage: dev
   region: us-west-2
-  timeout: 60
   iamRoleStatements:
     - Effect: Allow
       Action:
