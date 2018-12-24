@@ -59,13 +59,16 @@ const handleRequest = (request, response) => {
         response.end(`Unknown URL: ${url}`);
     }
 };
-let options = {};
+
+let www;
 if (proto === 'https') {
-    options = {
+    const options = {
         key: fs.readFileSync(keyFile),
         cert: fs.readFileSync(crtFile)
     };
+    www = lib.createServer(options, handleRequest);
+} else {
+    www = lib.createServer(handleRequest);
 }
-const www = lib.createServer(options, handleRequest);
 www.listen(port);
 console.log(`Listening for ${proto} connections on port ${port} ...`);
