@@ -1,0 +1,55 @@
+service:
+  name: pankajk-awslt-rds
+
+# Add the serverless-webpack plugin
+plugins:
+  - serverless-webpack
+
+custom:
+  vpc:
+    securityGroupIds:
+      - ${ssm:/${env:AWSLT_BASE}/securityGroupId1}
+      - ${ssm:/${env:AWSLT_BASE}/securityGroupId2}
+    subnetIds:
+      - ${ssm:/${env:AWSLT_BASE}/subnetId1}
+      - ${ssm:/${env:AWSLT_BASE}/subnetId2}
+  dbparams:
+    host: ${ssm:/${env:AWSLT_BASE}/hostname}
+    user: ${ssm:/${env:AWSLT_BASE}/username}
+    password: ${ssm:/${env:AWSLT_BASE}/password~true}
+    database: ${ssm:/${env:AWSLT_BASE}/dbschema}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: us-west-2
+
+functions:
+  rdsGet:
+    handler: src/rds_get.get
+    environment: ${self:custom.dbparams}
+    vpc: ${self:custom.vpc}
+    events:
+      - http:
+          method: get
+          path: rds-get/{key}
+
+  rdsGet2:
+    handler: src/rds_get2.get2
+    environment: ${self:custom.dbparams}
+    vpc: ${self:custom.vpc}
+    events:
+      - http:
+          method: get
+          path: rds-get2/{key}
+       
+  rdsPut:
+    handler: src/rds_put.put
+    environment: ${self:custom.dbparams}
+    vpc: ${self:custom.vpc}
+    events:
+      - http:
+          method: put
+          path: rds-put/{key}
+

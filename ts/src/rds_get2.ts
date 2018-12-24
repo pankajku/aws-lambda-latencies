@@ -1,9 +1,8 @@
 import * as mysql from 'mysql';
 
-const B = 1000000000; // 1 Billion, no. of nanoseconds in a second
-function hrtime2Seconds(hrtime: number[]): number {
-  return (hrtime[0]*B + hrtime[1])/B
-}
+let initialized: boolean = false;
+let state: string = 'Cold Start';
+let fn = 'rds_get2';
 
 let conn = null;
 function ensureDBConnection(cb) {
@@ -27,11 +26,11 @@ function ensureDBConnection(cb) {
 }
 
 export const get2 = (event, context, callback) => {
+  const st = process.hrtime();
   context.callbackWaitsForEmptyEventLoop = false;
   const key = event.pathParameters.key;
 
   ensureDBConnection(function(){
-    const st = process.hrtime();
     const sql = `SELECT value FROM kvpairs WHERE \`key\`='${key}'`;
     conn.query(sql, function (err, result) {
       if (err) {
@@ -39,14 +38,24 @@ export const get2 = (event, context, callback) => {
         conn = null;
         throw err;
       }
-      console.log(`Time in DB ops: ${hrtime2Seconds(process.hrtime(st))}`);
+      let value;
       if (result && result.length > 0) {
-        console.log('rdsGet succeeded:', result[0].value);
-        callback(null, { statusCode: 200, body: (new Buffer(result[0].value)).toString('utf8') });
+        value = (new Buffer(result[0].value)).toString('utf8');
       } else {
-        console.log(`entry not found.`);
-        callback(null, { statusCode: 404, body: 'entry not found' });
+        value = 'entry not found.';
       }
+      const et = process.hrtime(st);
+      let execTime = `${1000000*et[0] + et[1]/1000} micro secs`;
+      let resp = {
+        statusCode: 200,
+        body: JSON.stringify({fn, state, value, execTime}, null, 2),
+        headers: { 'Content-Type': 'application/json' },
+      };
+      if (!initialized) {
+        initialized = true;
+        state = 'Running';
+      }
+      callback(null, resp);
     });
   });
 }

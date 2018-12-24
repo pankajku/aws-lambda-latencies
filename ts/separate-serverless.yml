@@ -103,7 +103,7 @@ functions:
           path: typeorm-get/{key}
 
   typeormGet2:
-    handler: src/typeorm_get.get2
+    handler: src/typeorm_get2.get2
     environment: ${self:custom.dbparams}
     vpc: ${self:custom.vpc}
     events:

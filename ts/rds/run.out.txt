@@ -1,0 +1,225 @@
+Mon Dec 10 22:46:42 PST 2018
+{
+  "fn": "rds_get",
+  "state": "Running",
+  "value": "value1",
+  "execTime": "67621.63 micro secs"
+}{
+ "time_namelookup": 0.032056,
+ "time_connect": 0.044629,
+ "time_appconnect": 0.100272,
+ "time_pretransfer": 0.100498,
+ "time_redirect": 0.000000,
+ "time_starttransfer": 0.275293,
+ "time_total": 0.275359
+}Mon Dec 10 23:26:43 PST 2018
+{
+  "fn": "rds_get",
+  "state": "Running",
+  "value": "value1",
+  "execTime": "15545.072 micro secs"
+}{
+ "time_namelookup": 0.032685,
+ "time_connect": 0.045750,
+ "time_appconnect": 0.096106,
+ "time_pretransfer": 0.096363,
+ "time_redirect": 0.000000,
+ "time_starttransfer": 0.216964,
+ "time_total": 0.217047
+}Tue Dec 11 00:16:43 PST 2018
+{
+  "fn": "rds_get",
+  "state": "Running",
+  "value": "value1",
+  "execTime": "22379.41 micro secs"
+}{
+ "time_namelookup": 0.032007,
+ "time_connect": 0.045008,
+ "time_appconnect": 0.103156,
+ "time_pretransfer": 0.103355,
+ "time_redirect": 0.000000,
+ "time_starttransfer": 0.225590,
+ "time_total": 0.225683
+}Tue Dec 11 01:16:43 PST 2018
+{
+  "fn": "rds_get",
+  "state": "Running",
+  "value": "value1",
+  "execTime": "17455.75 micro secs"
+}{
+ "time_namelookup": 0.034202,
+ "time_connect": 0.047330,
+ "time_appconnect": 0.103719,
+ "time_pretransfer": 0.103961,
+ "time_redirect": 0.000000,
+ "time_starttransfer": 0.236658,
+ "time_total": 0.236724
+}Tue Dec 11 02:26:44 PST 2018
+{
+  "fn": "rds_get",
+  "state": "Cold Start",
+  "value": "value1",
+  "execTime": "45367.961 micro secs"
+}{
+ "time_namelookup": 0.037024,
+ "time_connect": 0.049646,
+ "time_appconnect": 0.101426,
+ "time_pretransfer": 0.101640,
+ "time_redirect": 0.000000,
+ "time_starttransfer": 0.523088,
+ "time_total": 0.523153
+}Tue Dec 11 03:46:44 PST 2018
+{
+  "fn": "rds_get",
+  "state": "Cold Start",
+  "value": "value1",
+  "execTime": "57801.915 micro secs"
+}{
+ "time_namelookup": 0.036217,
+ "time_connect": 0.049177,
+ "time_appconnect": 0.103840,
+ "time_pretransfer": 0.104130,
+ "time_redirect": 0.000000,
+ "time_starttransfer": 9.001209,
+ "time_total": 9.001270
+}Tue Dec 11 05:16:53 PST 2018
+{
+  "fn": "rds_get",
+  "state": "Cold Start",
+  "value": "value1",
+  "execTime": "74914.948 micro secs"
+}{
+ "time_namelookup": 0.038790,
+ "time_connect": 0.052413,
+ "time_appconnect": 0.105183,
+ "time_pretransfer": 0.105395,
+ "time_redirect": 0.000000,
+ "time_starttransfer": 9.000307,
+ "time_total": 9.000376
+}Tue Dec 11 06:57:02 PST 2018
+{
+  "fn": "rds_get",
+  "state": "Cold Start",
+  "value": "value1",
+  "execTime": "81957.201 micro secs"
+}{
+ "time_namelookup": 0.037142,
+ "time_connect": 0.049647,
+ "time_appconnect": 0.112106,
+ "time_pretransfer": 0.112349,
+ "time_redirect": 0.000000,
+ "time_starttransfer": 8.521921,
+ "time_total": 8.521979
+}Tue Dec 11 08:33:24 PST 2018
+{
+  "fn": "rds_get",
+  "state": "Cold Start",
+  "value": "value1",
+  "execTime": "46844.983 micro secs"
+}{
+ "time_namelookup": 0.035590,
+ "time_connect": 0.047970,
+ "time_appconnect": 0.113833,
+ "time_pretransfer": 0.114062,
+ "time_redirect": 0.000000,
+ "time_starttransfer": 0.522699,
+ "time_total": 0.522770
+}Tue Dec 11 09:13:25 PST 2018
+{
+  "fn": "rds_get",
+  "state": "Running",
+  "value": "value1",
+  "execTime": "15970.544 micro secs"
+}{
+ "time_namelookup": 0.035668,
+ "time_connect": 0.049095,
+ "time_appconnect": 0.104162,
+ "time_pretransfer": 0.104398,
+ "time_redirect": 0.000000,
+ "time_starttransfer": 0.272499,
+ "time_total": 0.272563
+}Tue Dec 11 10:03:25 PST 2018
+{
+  "fn": "rds_get",
+  "state": "Running",
+  "value": "value1",
+  "execTime": "14724.333 micro secs"
+}{
+ "time_namelookup": 0.033953,
+ "time_connect": 0.046392,
+ "time_appconnect": 0.105422,
+ "time_pretransfer": 0.105546,
+ "time_redirect": 0.000000,
+ "time_starttransfer": 0.364130,
+ "time_total": 0.364180
+}Tue Dec 11 11:03:25 PST 2018
+{
+  "fn": "rds_get",
+  "state": "Running",
+  "value": "value1",
+  "execTime": "32097.514 micro secs"
+}{
+ "time_namelookup": 0.032743,
+ "time_connect": 0.044630,
+ "time_appconnect": 0.101181,
+ "time_pretransfer": 0.101400,
+ "time_redirect": 0.000000,
+ "time_starttransfer": 0.257323,
+ "time_total": 0.257425
+}Tue Dec 11 12:13:26 PST 2018
+{
+  "fn": "rds_get",
+  "state": "Cold Start",
+  "value": "value1",
+  "execTime": "64142.811 micro secs"
+}{
+ "time_namelookup": 0.034548,
+ "time_connect": 0.047054,
+ "time_appconnect": 0.102821,
+ "time_pretransfer": 0.103025,
+ "time_redirect": 0.000000,
+ "time_starttransfer": 7.930644,
+ "time_total": 7.930677
+}Tue Dec 11 13:33:34 PST 2018
+{
+  "fn": "rds_get",
+  "state": "Cold Start",
+  "value": "value1",
+  "execTime": "84915.207 micro secs"
+}{
+ "time_namelookup": 0.030811,
+ "time_connect": 0.044201,
+ "time_appconnect": 0.101740,
+ "time_pretransfer": 0.102002,
+ "time_redirect": 0.000000,
+ "time_starttransfer": 0.466880,
+ "time_total": 0.466962
+}Tue Dec 11 15:03:34 PST 2018
+{
+  "fn": "rds_get",
+  "state": "Cold Start",
+  "value": "value1",
+  "execTime": "65878.856 micro secs"
+}{
+ "time_namelookup": 0.034547,
+ "time_connect": 0.046275,
+ "time_appconnect": 0.102570,
+ "time_pretransfer": 0.102808,
+ "time_redirect": 0.000000,
+ "time_starttransfer": 0.540270,
+ "time_total": 0.540350
+}Tue Dec 11 16:43:35 PST 2018
+{
+  "fn": "rds_get",
+  "state": "Cold Start",
+  "value": "value1",
+  "execTime": "73235.096 micro secs"
+}{
+ "time_namelookup": 0.031027,
+ "time_connect": 0.043053,
+ "time_appconnect": 0.095199,
+ "time_pretransfer": 0.095424,
+ "time_redirect": 0.000000,
+ "time_starttransfer": 0.515206,
+ "time_total": 0.515289
+}

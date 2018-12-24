@@ -1,28 +1,33 @@
 let Memcached = require('memcached');
 
-const B = 1000000000; // 1 Billion, no. of nanoseconds in a second
-function hrtime2Seconds(hrtime: number[]): number {
-  return (hrtime[0]*B + hrtime[1])/B
-}
+let initialized: boolean = false;
+let state: string = 'Cold Start';
+let fn = 'memcached_get';
 
 export const get = (event, context, callback) => {
+  const st = process.hrtime();
   context.callbackWaitsForEmptyEventLoop = false;
   const key = event.pathParameters.key;
 
-  const st = process.hrtime();
   let memcached = new Memcached(process.env.memcachedEndPoint);
 
   memcached.get(`pankaj:latencies:${key}`, function(err, data) {
     if (err) {
       throw err;
     }
-    console.log(`Time in memcached op: ${hrtime2Seconds(process.hrtime(st))}`);
-    if (data) {
-      console.log('memcachedGet succeeded:', data);
-      callback(null, { statusCode: 200, body: (new Buffer(data)).toString('utf8') });
-    } else {
-      console.log(`entry not found.`);
-      callback(null, { statusCode: 404, body: 'entry not found' });
+    const value = data ? (new Buffer(data)).toString('utf8') : `entry not found`;
+
+    const et = process.hrtime(st);
+    let execTime = `${1000000*et[0] + et[1]/1000} micro secs`;
+    let resp = {
+      statusCode: 200,
+      body: JSON.stringify({fn, state, value, execTime}, null, 2),
+      headers: { 'Content-Type': 'application/json' },
+    };
+    if (!initialized) {
+      initialized = true;
+      state = 'Running';
     }
+    callback(null, resp);
   });
 }

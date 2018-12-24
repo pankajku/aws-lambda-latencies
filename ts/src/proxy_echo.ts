@@ -1,33 +1,58 @@
 
 import * as AWS from 'aws-sdk';
 
+let initialized: boolean = false;
+let state: string = 'Cold Start';
+console.log('Proxy Echo Cold Start');
+let fn = 'proxy_echo';
+
 export const proxyEcho = (event, context, callback) => {
-  var lambda = new AWS.Lambda({
-    region: 'us-west-2' //change to your region
-  });
   const st = process.hrtime();
+  let msg: string = 'No Message';
+  if (event.queryStringParameters && event.queryStringParameters.msg) {
+    msg = event.queryStringParameters.msg;
+  }
+  let req: any = {
+    awsRequestId: context.awsRequestId,
+    requestId: event.requestContext.requestId,
+    Via: event.headers.Via,
+    'X-Forwarded-For': event.headers['X-Forwarded-For']
+  };
+
+  var lambda = new AWS.Lambda({
+    region: process.env['AWS_REGION']
+  });
+
+  const ownName = process.env['AWS_LAMBDA_FUNCTION_NAME'];
   lambda.invoke({
-    FunctionName: 'aws-lambda-latencies-pankajk-echo',
+    FunctionName: ownName.replace('proxyEcho', 'echo'),
     Payload: JSON.stringify(event) // pass params
   }, function(error, data) {
     const et = process.hrtime(st);
-    console.log('Elapsed Time:' , et[0], 'secs, ', Math.round(et[1]/1000000), 'milli secs.');
+    let execTime = `${1000000*et[0] + et[1]/1000} micro secs`;
+    let respToProxy = '';
     if (error) {
-      console.error('error:', error);
-      context.done('error', error);
-    }
-    if (data && data.Payload) {
+      respToProxy = `error: ${error}`;
+    } else if (data && data.Payload) {
       var stmt = JSON.parse(<string>data.Payload);
       if (stmt.errorMessage){
-        console.log("stmt.errorMessage:", stmt.errorMessage);
-        context.fail(stmt.errorMessage);
+        respToProxy = `stmt.errorMessage: ${stmt.errorMessage}`;
       } else {
-        console.log("stmt:", stmt);
-        context.succeed(stmt);
+        respToProxy = `stmt: ${JSON.stringify(stmt, null, 2)}`;
       }
     } else {
-      console.log("data:", data);
-      context.fail("No Payload");
+      respToProxy = `error: No Payload`;
     }
+    let env = JSON.stringify(process.env, null, 2);
+    let resp = {
+      statusCode: 200,
+      body: JSON.stringify({fn, state, msg, req, respToProxy, execTime}, null, 2),
+      headers: { 'Content-Type': 'application/json' },
+    };
+    if (!initialized) {
+      initialized = true;
+      state = 'Running';
+    }
+    callback(null, resp);
   });
 }
