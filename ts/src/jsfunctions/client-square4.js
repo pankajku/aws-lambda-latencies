@@ -1,9 +1,7 @@
 exports.fn = async function(src) {
     const reqBody = JSON.stringify(src, null, 2);
-    const proto = process.env['PROTO'] ? process.env['PROTO'] : 'http';
-    const host = process.env['HOST'] ? process.env['HOST'] : 'localhost';
-    const port = process.env['PORT'] ? Number(process.env['PORT']) : (proto === 'http' ? 80 : 443);
-    const resBody = await post(`${proto}://${host}:${port}/square4`, reqBody);
+    const url = process.env['CFURL'] ? process.env['CFURL'] : 'http://localhost/square4';
+    const resBody = await post(url, reqBody);
     const result = JSON.parse(resBody);
     return result;
 }
@@ -14,7 +12,7 @@ async function post(url, body) {
         const slashIndex = url.indexOf('/', protoPrefix.length);
         let hostname = slashIndex === -1 ? url.slice(protoPrefix.length) : url.slice(protoPrefix.length, slashIndex);
         const colonIndex = hostname.indexOf(':');
-        const port = colonIndex !== -1 ? Number(hostname.slice(colonIndex+1)) : 80;
+        const port = colonIndex !== -1 ? Number(hostname.slice(colonIndex+1)) : (protoPrefix === 'https://' ? 443 : 80);
         hostname = colonIndex !== -1 ? hostname.slice(0, colonIndex) : hostname;
         const path = slashIndex === -1 ? '/' : url.slice(slashIndex);
         const lib = protoPrefix === 'https://' ? require('https') : require('http');
