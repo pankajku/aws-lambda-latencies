@@ -2,7 +2,7 @@ exports.fn = async function(src) {
     const reqBody = JSON.stringify(src, null, 2);
     const proto = process.env['PROTO'] ? process.env['PROTO'] : 'http';
     const host = process.env['HOST'] ? process.env['HOST'] : 'localhost';
-    const port = process.env['POST'] ? process.env['PORT'] : (proto === 'http' ? 80 : 443);
+    const port = process.env['PORT'] ? Number(process.env['PORT']) : (proto === 'http' ? 80 : 443);
     const resBody = await post(`${proto}://${host}:${port}/square4`, reqBody);
     const result = JSON.parse(resBody);
     return result;
