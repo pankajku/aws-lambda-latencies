@@ -16,6 +16,9 @@ async function post(url, body) {
         hostname = colonIndex !== -1 ? hostname.slice(0, colonIndex) : hostname;
         const path = slashIndex === -1 ? '/' : url.slice(slashIndex);
         const lib = protoPrefix === 'https://' ? require('https') : require('http');
+        if (process.env['KEEPALIVE']) {
+            lib.globalAgent.keepAlive = true;
+        }
         const options = { 
             hostname, port, path, method: 'POST',
             rejectUnauthorized: false,
